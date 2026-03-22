@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Her Collage Gallery</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: #fdf6f9;
+      color: #444;
+    }
+    header {
+      text-align: center;
+      padding: 20px;
+      font-size: 2em;
+      font-style: italic;
+      color: #b35d7f;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      justify-items: center;
+      align-items: start;
+    }
+    .photo-card {
+      position: relative;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s forwards;
+    }
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+      cursor: pointer;
+    }
+    .overlay-text {
+      position: absolute;
+      bottom: -40px;
+      left: 10px;
+      background: rgba(255,255,255,0.7);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      color: #b35d7f;
+      font-style: italic;
+      transition: bottom 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    .decor {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.6;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .flower1 { top: 10px; right: 10px; }
+    .flower2 { bottom: 10px; right: 10px; }
+    .flower3 { top: 10px; left: 10px; }
+    .clock   { bottom: 10px; left: 10px; }
+    .envelope{ top: 40%; left: 40%; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 1em;
+      color: #777;
+    }
+    /* Hover effects */
+    .photo-card:hover {
+      transform: scale(1.03);
+    }
+    .photo-card:hover img {
+      transform: scale(1.05);
+    }
+    .photo-card:hover .overlay-text {
+      bottom: 10px;
+      opacity: 1;
+    }
+    .photo-card:hover .decor {
+      opacity: 1;
+      transform: rotate(10deg) scale(1.1);
+    }
+    /* Aspect ratios + max widths */
+    .photo2  { aspect-ratio: 480 / 435; max-width: 480px; }
+    .photo4  { aspect-ratio: 958 / 532; max-width: 700px; }
+    .photo5  { aspect-ratio: 1080 / 1922; max-width: 400px; }
+    .photo6  { aspect-ratio: 851 / 480; max-width: 650px; }
+    .photo8  { aspect-ratio: 663 / 834; max-width: 450px; }
+    .photo10 { aspect-ratio: 480 / 502; max-width: 480px; }
+    /* Fade-in animation */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .photo-card:nth-child(1) { animation-delay: 0.2s; }
+    .photo-card:nth-child(2) { animation-delay: 0.4s; }
+    .photo-card:nth-child(3) { animation-delay: 0.6s; }
+    .photo-card:nth-child(4) { animation-delay: 0.8s; }
+    .photo-card:nth-child(5) { animation-delay: 1s; }
+    .photo-card:nth-child(6) { animation-delay: 1.2s; }
+    .photo-card:nth-child(7) { animation-delay: 1.4s; }
+    .photo-card:nth-child(8) { animation-delay: 1.6s; }
+    .photo-card:nth-child(9) { animation-delay: 1.8s; }
+    .photo-card:nth-child(10){ animation-delay: 2s; }
+    /* Lightbox styles */
+    .lightbox {
+      display: none;
+      position: fixed;
+      z-index: 999;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+    }
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2em;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>In a world full of faces, she’s the pretty girl my heart recognizes</header>
+
+  <div class="gallery">
+    <div class="photo-card"><img src="photo1.jpg" alt="Her photo"></div>
+    <div class="photo-card photo2"><img src="photo2.png" alt="Her photo"></div>
+    <div class="photo-card"><img src="photo3.jpg" alt="Her photo"></div>
+    <div class="photo-card photo4"><img src="photo4.jpeg" alt="Her photo"></div>
+    <div class="photo-card photo5"><img src="photo5.jpg" alt="Her photo"></div>
+    <div class="photo-card photo6"><img src="photo6.jpg" alt="Her photo"></div>
+    <div class="photo-card"><img src="photo7.jpeg" alt="Her photo"></div>
+    <div class="photo-card photo8"><img src="photo8.jpeg" alt="Her photo"></div>
+    <div class="photo-card"><img src="photo9.jpeg" alt="Her photo"></div>
+    <div class="photo-card photo10"><img src="photo10.jpg" alt="Her photo"></div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" id="closeBtn">&times;</span>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
+  <footer>Made with love</footer>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeBtn = document.getElementById('closeBtn');
+    const photos = document.querySelectorAll('.photo-card img');
+
+    photos.forEach(photo => {
+      photo.addEventListener('click', () => {
+        lightbox.classList.add('active');
+        lightboxImg.src = photo.src;
+      });
+    });
+
+    closeBtn.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html>
