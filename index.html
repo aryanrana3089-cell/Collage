@@ -9,6 +9,10 @@
       font-family: 'Georgia', serif;
       background: #fdf6f9;
       color: #444;
+      transition: opacity 1s ease; /* Fade effect */
+    }
+    body.fade-out {
+      opacity: 0;
     }
     header {
       text-align: center;
@@ -36,7 +40,7 @@
       transform: translateY(20px);
       animation: fadeInUp 0.8s forwards;
     }
-    .photo-card img {
+    .photo-card img.main-photo {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -79,7 +83,7 @@
     .photo-card:hover {
       transform: scale(1.03);
     }
-    .photo-card:hover img {
+    .photo-card:hover img.main-photo {
       transform: scale(1.05);
     }
     .photo-card:hover .overlay-text {
@@ -90,13 +94,6 @@
       opacity: 1;
       transform: rotate(10deg) scale(1.1);
     }
-    /* Aspect ratios + max widths */
-    .photo2  { aspect-ratio: 480 / 435; max-width: 480px; }
-    .photo4  { aspect-ratio: 958 / 532; max-width: 700px; }
-    .photo5  { aspect-ratio: 1080 / 1922; max-width: 400px; }
-    .photo6  { aspect-ratio: 851 / 480; max-width: 650px; }
-    .photo8  { aspect-ratio: 663 / 834; max-width: 450px; }
-    .photo10 { aspect-ratio: 480 / 502; max-width: 480px; }
     /* Fade-in animation */
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -140,22 +137,38 @@
       color: #fff;
       cursor: pointer;
     }
+    /* Wanna Play button */
+    .play-btn {
+      display: block;
+      margin: 30px auto;
+      padding: 12px 24px;
+      background: #b35d7f;
+      color: #fff;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .play-btn:hover {
+      background: #923f61;
+    }
   </style>
 </head>
 <body>
   <header>In a world full of faces, You are the only pretty girl my heart recognizes</header>
 
   <div class="gallery">
-    <div class="photo-card"><img src="photo1.jpg" alt="Her photo"></div>
-    <div class="photo-card photo2"><img src="photo2.png" alt="Her photo"></div>
-    <div class="photo-card"><img src="photo3.jpg" alt="Her photo"></div>
-    <div class="photo-card photo4"><img src="photo4.jpeg" alt="Her photo"></div>
-    <div class="photo-card photo5"><img src="photo5.jpg" alt="Her photo"></div>
-    <div class="photo-card photo6"><img src="photo6.jpg" alt="Her photo"></div>
-    <div class="photo-card"><img src="photo7.jpeg" alt="Her photo"></div>
-    <div class="photo-card photo8"><img src="photo8.jpeg" alt="Her photo"></div>
-    <div class="photo-card"><img src="photo9.jpeg" alt="Her photo"></div>
-    <div class="photo-card photo10"><img src="photo10.jpg" alt="Her photo"></div>
+    <div class="photo-card"><img src="photo1.jpg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo2"><img src="photo2.png" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card"><img src="photo3.jpg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo4"><img src="photo4.jpeg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo5"><img src="photo5.jpg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo6"><img src="photo6.jpg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card"><img src="photo7.jpeg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo8"><img src="photo8.jpeg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card"><img src="photo9.jpeg" alt="Her photo" class="main-photo"></div>
+    <div class="photo-card photo10"><img src="photo10.jpg" alt="Her photo" class="main-photo"></div>
   </div>
 
   <!-- Lightbox -->
@@ -164,14 +177,19 @@
     <img id="lightboxImg" src="" alt="">
   </div>
 
+  <!-- Wanna Play Button -->
+  <button class="play-btn" id="playBtn">Wanna Play</button>
+
   <footer>Made with love</footer>
 
   <script>
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const closeBtn = document.getElementById('closeBtn');
-    const photos = document.querySelectorAll('.photo-card img');
+    const photos = document.querySelectorAll('.photo-card img.main-photo');
+    const playBtn = document.getElementById('playBtn');
 
+    // Lightbox functionality
     photos.forEach(photo => {
       photo.addEventListener('click', () => {
         lightbox.classList.add('active');
@@ -187,6 +205,16 @@
       if (e.target === lightbox) {
         lightbox.classList.remove('active');
       }
+    });
+
+    // Wanna Play button with fade-out redirect
+    const redirectUrl = "https://www.youtube.com"; // Change this to your desired URL
+
+    playBtn.addEventListener('click', () => {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 1000); // matches CSS transition duration
     });
   </script>
 </body>
